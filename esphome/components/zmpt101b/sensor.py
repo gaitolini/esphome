@@ -25,14 +25,38 @@ def validate_adc_pin(value):
 zmpt101b_ns = cg.esphome_ns.namespace('zmpt101b')
 ZMPT101BSensor = zmpt101b_ns.class_('ZMPT101BSensor', sensor.Sensor, cg.PollingComponent)
 
-CONFIG_SCHEMA = sensor.sensor_schema(UNIT_VOLT, ICON_PULSE, 2).extend({
-    cv.GenerateID(): cv.declare_id(ZMPT101BSensor),
-    cv.Required(CONF_PIN): validate_adc_pin,
-    cv.Optional(CONF_CALIBRATION, default=84): cv.float_,
-    cv.Optional(CONF_NUMBER_OF_SAMPLES, default='20'): cv.int_,
-    cv.Optional(CONF_FREQUENCY, default='50hz'): cv.enum(FREQUENCY_OPTIONS),
-    cv.Optional(CONF_PHASE_SHIFT, default=1.7): cv.float_,
-}).extend(cv.polling_component_schema('60s'))
+CONFIG_SCHEMA = (
+    sensor.sensor_schema(
+        ZMPT101BSensor,
+        unit_of_measurement=UNIT_VOLT,
+        icon=ICON_PULSE,
+        accuracy_decimals=2,
+        state_class=sensor.STATE_CLASS_MEASUREMENT        
+    )
+    .extend(
+        {
+            cv.GenerateID(): cv.declare_id(ZMPT101BSensor),
+            cv.Required(CONF_PIN): validate_adc_pin,
+            cv.Optional(CONF_CALIBRATION, default=84): cv.float_,
+            cv.Optional(CONF_NUMBER_OF_SAMPLES, default='20'): cv.int_,
+            cv.Optional(CONF_FREQUENCY, default='50hz'): cv.enum(FREQUENCY_OPTIONS),
+            cv.Optional(CONF_PHASE_SHIFT, default=1.7): cv.float_,
+        }
+    )
+    .extend(cv.polling_component_schema('60s'))
+)
+
+        
+        # UNIT_VOLT, ICON_PULSE, 2).extend(
+        #     {
+        #         cv.GenerateID(): cv.declare_id(ZMPT101BSensor),
+        #         cv.Required(CONF_PIN): validate_adc_pin,
+        #         cv.Optional(CONF_CALIBRATION, default=84): cv.float_,
+        #         cv.Optional(CONF_NUMBER_OF_SAMPLES, default='20'): cv.int_,
+        #         cv.Optional(CONF_FREQUENCY, default='50hz'): cv.enum(FREQUENCY_OPTIONS),
+        #         cv.Optional(CONF_PHASE_SHIFT, default=1.7): cv.float_,
+        #     })
+        # .extend(cv.polling_component_schema('60s')))
 
 
 async def to_code(config):
