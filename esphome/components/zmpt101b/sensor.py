@@ -2,7 +2,7 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome import pins
 from esphome.components import sensor
-from esphome.const import CONF_SENSOR, CONF_ID, CONF_PIN, ICON_PULSE, UNIT_VOLT, CONF_CALIBRATION, CONF_FREQUENCY 
+from esphome.const import CONF_SENSOR, CONF_ID, CONF_PIN, ICON_PULSE, UNIT_VOLT, CONF_CALIBRATION, CONF_FREQUENCY, STATE_CLASS_MEASUREMENT 
 
 
 CODEOWNERS = ['@sourabhjaiswal','@gaitolini']
@@ -31,7 +31,7 @@ CONFIG_SCHEMA = (
         unit_of_measurement=UNIT_VOLT,
         icon=ICON_PULSE,
         accuracy_decimals=2,
-        state_class=sensor.STATE_CLASS_MEASUREMENT        
+        state_class=STATE_CLASS_MEASUREMENT        
     )
     .extend(
         {
