@@ -2,6 +2,8 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome import pins
 from esphome.components import sensor
+from esphome.components import i2c
+from esphome.components import adc
 from esphome.const import CONF_SENSOR, CONF_ID, CONF_PIN, ICON_PULSE, UNIT_VOLT, CONF_CALIBRATION, CONF_FREQUENCY, STATE_CLASS_MEASUREMENT 
 
 
@@ -19,7 +21,7 @@ def validate_adc_pin(value):
     if (pinAnalogic == 'VCC'):
         return cv.only_on_esp8266(pinAnalogic)
     if (pinAnalogic == 'A0') or (pinAnalogic == 'A1'):
-        return True
+        return pins.PIN_SCHEMA_REGISTRY
     return pins.internal_gpio_input_pin_schema(value)
 
 
@@ -54,6 +56,7 @@ async def to_code(config):
 
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
+    await i2c.register_i2c_device(var, config) 
     await sensor.register_sensor(var, config)
     cg.add_library('EmonLib', None)
     pin = await cg.gpio_pin_expression(config[CONF_PIN])
