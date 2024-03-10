@@ -47,6 +47,9 @@ CONFIG_SCHEMA = (
 )
 
 async def to_code(config):
+  if not isinstance(config, dict) or CONF_ID not in config:
+    raise ValueError("config deve ser um dicionário contendo a chave '{}'".format(CONF_ID))    
+
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
     await sensor.register_sensor(var, config)
