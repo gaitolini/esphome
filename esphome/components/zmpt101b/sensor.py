@@ -15,9 +15,11 @@ FREQUENCY_OPTIONS = {
 }
 
 def validate_adc_pin(value):
-    vcc = str(value).upper()
-    if vcc == 'VCC':
-        return cv.only_on_esp8266(vcc)
+    pinAnalogic = str(value).upper()
+    if (pinAnalogic == 'VCC'):
+        return cv.only_on_esp8266(pinAnalogic)
+    if (pinAnalogic == 'A0') or (pinAnalogic == 'A1'):
+        return True
     return pins.internal_gpio_input_pin_schema(value)
 
 
