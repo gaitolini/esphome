@@ -20,8 +20,8 @@ def validate_adc_pin(value):
     pinAnalogic = str(value).upper()
     if (pinAnalogic == 'VCC'):
         return cv.only_on_esp8266(pinAnalogic)
-    if (pinAnalogic == 'A0') or (pinAnalogic == 'A1'):
-        return pins.PIN_SCHEMA_REGISTRY
+    # if (pinAnalogic == 'A0') or (pinAnalogic == 'A1'):
+    #     return pins.PIN_SCHEMA_REGISTRY
     return pins.internal_gpio_input_pin_schema(value)
 
 
