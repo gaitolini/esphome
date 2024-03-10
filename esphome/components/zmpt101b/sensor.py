@@ -46,26 +46,14 @@ CONFIG_SCHEMA = (
     .extend(cv.polling_component_schema('60s'))
 )
 
-        
-        # UNIT_VOLT, ICON_PULSE, 2).extend(
-        #     {
-        #         cv.GenerateID(): cv.declare_id(ZMPT101BSensor),
-        #         cv.Required(CONF_PIN): validate_adc_pin,
-        #         cv.Optional(CONF_CALIBRATION, default=84): cv.float_,
-        #         cv.Optional(CONF_NUMBER_OF_SAMPLES, default='20'): cv.int_,
-        #         cv.Optional(CONF_FREQUENCY, default='50hz'): cv.enum(FREQUENCY_OPTIONS),
-        #         cv.Optional(CONF_PHASE_SHIFT, default=1.7): cv.float_,
-        #     })
-        # .extend(cv.polling_component_schema('60s')))
-
 async def to_code(config):
-    var = cg.new_Pvariable(cv.declare_id(ZMPT101BSensor))   #config[CONF_ID])
+    var = cg.new_Pvariable(0)   #config[CONF_ID])
     await cg.register_component(var, config)
     await sensor.register_sensor(var, config)
     cg.add_library('EmonLib', None)
     pin = await cg.gpio_pin_expression(config[CONF_PIN])
-    cg.add(var.set_pin(pin))
-    cg.add(var.set_conf_calibration(config[CONF_CALIBRATION]))
-    cg.add(var.set_conf_number_of_samples(config[CONF_NUMBER_OF_SAMPLES]))
-    cg.add(var.set_conf_frequency(config[CONF_FREQUENCY]))
-    cg.add(var.set_conf_phase_shift(config[CONF_PHASE_SHIFT]))
+    # cg.add(var.set_pin(pin))
+    # cg.add(var.set_conf_calibration(config[CONF_CALIBRATION]))
+    # cg.add(var.set_conf_number_of_samples(config[CONF_NUMBER_OF_SAMPLES]))
+    # cg.add(var.set_conf_frequency(config[CONF_FREQUENCY]))
+    # cg.add(var.set_conf_phase_shift(config[CONF_PHASE_SHIFT]))
