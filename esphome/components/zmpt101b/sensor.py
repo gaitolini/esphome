@@ -58,9 +58,8 @@ CONFIG_SCHEMA = (
         #     })
         # .extend(cv.polling_component_schema('60s')))
 
-
 async def to_code(config):
-    var = cg.new_Pvariable(config[CONF_ID])
+    var = cg.new_Pvariable(cv.declare_id(ZMPT101BSensor))   #config[CONF_ID])
     await cg.register_component(var, config)
     await sensor.register_sensor(var, config)
     cg.add_library('EmonLib', None)
