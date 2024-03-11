@@ -40,7 +40,8 @@ CONFIG_SCHEMA = (
     .extend(
         {
             cv.GenerateID(): cv.declare_id(ZMPT101BSensor),
-            cv.Required(CONF_PIN): pins.internal_gpio_input_pin_schema,
+            cv.Required(CONF_PIN): pins.gpio_input_pin_schema,
+            cv.Optional(CONF_PIN): validate_adc_pin,
             cv.Optional(CONF_CALIBRATION, default=84): cv.float_,
             cv.Optional(CONF_NUMBER_OF_SAMPLES, default='20'): cv.int_,
             cv.Optional(CONF_FREQUENCY, default='50hz'): cv.enum(FREQUENCY_OPTIONS),
