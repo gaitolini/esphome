@@ -4,7 +4,7 @@ from esphome import pins
 from esphome.components import sensor
 from esphome.components import i2c
 from esphome.components import adc
-from esphome.const import CONF_SENSOR, CONF_ID, CONF_PIN, ICON_PULSE, UNIT_VOLT, CONF_CALIBRATION, CONF_FREQUENCY, STATE_CLASS_MEASUREMENT 
+from esphome.const import CONF_SENSOR, CONF_ID, CONF_PIN, ICON_PULSE, UNIT_VOLT, CONF_CALIBRATION, CONF_FREQUENCY, STATE_CLASS_MEASUREMENT, CONF_I2C_ID
 
 
 CODEOWNERS = ['@sourabhjaiswal','@gaitolini']
@@ -42,6 +42,7 @@ CONFIG_SCHEMA = (
             cv.GenerateID(): cv.declare_id(ZMPT101BSensor),
             cv.Required(CONF_PIN): pins.gpio_input_pin_schema,
             cv.Optional(CONF_PIN): validate_adc_pin,
+            cv.Optional(CONF_I2C_ID): cv.i2c_id,
             cv.Optional(CONF_CALIBRATION, default=84): cv.float_,
             cv.Optional(CONF_NUMBER_OF_SAMPLES, default='20'): cv.int_,
             cv.Optional(CONF_FREQUENCY, default='50hz'): cv.enum(FREQUENCY_OPTIONS),
