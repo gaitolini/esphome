@@ -42,7 +42,7 @@ CONFIG_SCHEMA = (
             cv.GenerateID(): cv.declare_id(ZMPT101BSensor),
             cv.Required(CONF_PIN): pins.gpio_input_pin_schema,
             cv.Optional(CONF_PIN): validate_adc_pin,
-            cv.Optional(CONF_I2C_ID): cv.i2c_id,
+            cv.Optional(CONF_PIN): pins.CONF_INPUT,
             cv.Optional(CONF_CALIBRATION, default=84): cv.float_,
             cv.Optional(CONF_NUMBER_OF_SAMPLES, default='20'): cv.int_,
             cv.Optional(CONF_FREQUENCY, default='50hz'): cv.enum(FREQUENCY_OPTIONS),
@@ -54,8 +54,8 @@ CONFIG_SCHEMA = (
 )
 
 async def to_code(config):
-  if not isinstance(config, dict) or CONF_ID not in config:
-    raise ValueError("config deve ser um dicionário contendo a chave '{}'".format(CONF_ID))    
+#   if not isinstance(config, dict) or CONF_ID not in config:
+#     raise ValueError("config deve ser um dicionário contendo a chave '{}'".format(CONF_ID))    
 
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
@@ -63,8 +63,8 @@ async def to_code(config):
     await sensor.register_sensor(var, config)
     cg.add_library('EmonLib', None)
     pin = await cg.gpio_pin_expression(config[CONF_PIN])
-    # cg.add(var.set_pin(pin))
-    # cg.add(var.set_conf_calibration(config[CONF_CALIBRATION]))
-    # cg.add(var.set_conf_number_of_samples(config[CONF_NUMBER_OF_SAMPLES]))
-    # cg.add(var.set_conf_frequency(config[CONF_FREQUENCY]))
-    # cg.add(var.set_conf_phase_shift(config[CONF_PHASE_SHIFT]))
+    cg.add(var.set_pin(pin))
+    cg.add(var.set_conf_calibration(config[CONF_CALIBRATION]))
+    cg.add(var.set_conf_number_of_samples(config[CONF_NUMBER_OF_SAMPLES]))
+    cg.add(var.set_conf_frequency(config[CONF_FREQUENCY]))
+    cg.add(var.set_conf_phase_shift(config[CONF_PHASE_SHIFT]))
