@@ -32,7 +32,7 @@ CONFIG_SCHEMA = (
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=2,
         icon=ICON_PULSE,
-        device_class=sensor.DEVICE_CLASS_VOLTAGE       
+        device_class=sensor.DEVICE_CLASS_VOLTAGE,       
         state_class=sensor.STATE_CLASS_MEASUREMENT 
     )
     .extend(
