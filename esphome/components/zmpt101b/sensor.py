@@ -3,7 +3,17 @@ from esphome.components.ct_clamp.sensor import CONF_SAMPLE_DURATION
 import esphome.config_validation as cv
 from esphome import pins
 from esphome.components import sensor, voltage_sampler
-from esphome.const import CONF_SENSOR, CONF_ID, CONF_PIN, ICON_PULSE, UNIT_VOLT, CONF_CALIBRATION, CONF_FREQUENCY, DEVICE_CLASS_VOLTAGE, DEVICE_CLASS_CURRENT 
+from esphome.const import (
+    CONF_SENSOR, 
+    CONF_ID, 
+    CONF_PIN, 
+    ICON_PULSE, 
+    UNIT_VOLT, 
+    CONF_CALIBRATION, 
+    CONF_FREQUENCY, 
+    DEVICE_CLASS_VOLTAGE,
+    STATE_CLASS_MEASUREMENT,)
+     
 
 
 CODEOWNERS = ['@sourabhjaiswal','@gaitolini']
