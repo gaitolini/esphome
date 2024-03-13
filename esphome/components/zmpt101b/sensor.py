@@ -1,5 +1,4 @@
 import esphome.codegen as cg
-from esphome.components.ct_clamp.sensor import CONF_SAMPLE_DURATION
 import esphome.config_validation as cv
 from esphome import pins
 from esphome.components import sensor, voltage_sampler
@@ -19,6 +18,7 @@ from esphome.const import (
 CODEOWNERS = ['@sourabhjaiswal','@gaitolini']
 CONF_PHASE_SHIFT = 'phase_shift'
 CONF_NUMBER_OF_SAMPLES = 'num_of_samples'
+CONF_SAMPLE_DURATION = "sample_duration"
 
 FREQUENCY_OPTIONS = {
     '50hz': 50,
@@ -43,7 +43,6 @@ CONFIG_SCHEMA = (
         accuracy_decimals=2,
         icon=ICON_PULSE,
         device_class=sensor.DEVICE_CLASS_VOLTAGE,       
-        state_class=sensor.STATE_CLASS_MEASUREMENT, 
     )
     .extend(
         {
