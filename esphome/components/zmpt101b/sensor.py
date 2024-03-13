@@ -33,7 +33,7 @@ CONFIG_SCHEMA = (
         accuracy_decimals=2,
         icon=ICON_PULSE,
         device_class=sensor.DEVICE_CLASS_VOLTAGE,       
-        state_class=sensor.STATE_CLASS_MEASUREMENT 
+        state_class=sensor.STATE_CLASS_MEASUREMENT, 
     )
     .extend(
         {
