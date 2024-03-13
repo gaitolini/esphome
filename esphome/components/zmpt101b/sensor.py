@@ -53,14 +53,14 @@ CONFIG_SCHEMA = (
             cv.Optional(CONF_PHASE_SHIFT, default=1.7): cv.float_,
         }
     )
-    .extend(
-        {
-            cv.Required(CONF_SENSOR): cv.use_id(voltage_sampler.VoltageSampler),
-            cv.Optional(
-                CONF_SAMPLE_DURATION, default="200ms"
-            ): cv.positive_time_period_milliseconds,
-        }
-    )        
+    # .extend(
+    #     {
+    #         cv.Required(CONF_SENSOR): cv.use_id(voltage_sampler.VoltageSampler),
+    #         cv.Optional(
+    #             CONF_SAMPLE_DURATION, default="200ms"
+    #         ): cv.positive_time_period_milliseconds,
+    #     }
+    # )        
     .extend(cv.polling_component_schema('60s'))
 )
 
@@ -88,6 +88,6 @@ async def to_code(config):
     cg.add(var.set_conf_number_of_samples(config[CONF_NUMBER_OF_SAMPLES]))
     cg.add(var.set_conf_frequency(config[CONF_FREQUENCY]))
     cg.add(var.set_conf_phase_shift(config[CONF_PHASE_SHIFT]))
-    sens = await cg.get_variable(config[CONF_SENSOR])
-    cg.add(var.set_source(sens))
-    cg.add(var.set_sample_duration(config[CONF_SAMPLE_DURATION]))    
+    # sens = await cg.get_variable(config[CONF_SENSOR])
+    # cg.add(var.set_source(sens))
+    # cg.add(var.set_sample_duration(config[CONF_SAMPLE_DURATION]))    
