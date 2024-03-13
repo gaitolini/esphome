@@ -10,8 +10,7 @@ from esphome.const import (
     UNIT_VOLT, 
     CONF_CALIBRATION, 
     CONF_FREQUENCY, 
-    DEVICE_CLASS_VOLTAGE,
-    STATE_CLASS_MEASUREMENT,)
+    DEVICE_CLASS_VOLTAGE,)
      
 
 
