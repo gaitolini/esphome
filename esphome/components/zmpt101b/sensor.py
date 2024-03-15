@@ -41,26 +41,18 @@ CONFIG_SCHEMA = (
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=2,
         icon=ICON_PULSE,
-        device_class=sensor.DEVICE_CLASS_VOLTAGE,       
+        device_class= DEVICE_CLASS_VOLTAGE,       
     )
     .extend(
-        {
+        {              
             cv.GenerateID(): cv.declare_id(ZMPT101BSensor),
             cv.Required(CONF_PIN): validate_adc_pin,
             cv.Optional(CONF_CALIBRATION, default=84): cv.float_,
             cv.Optional(CONF_NUMBER_OF_SAMPLES, default='20'): cv.int_,
-            cv.Optional(CONF_FREQUENCY, default='50hz'): cv.enum(FREQUENCY_OPTIONS),
+            cv.Optional(CONF_FREQUENCY, default= '60hz'): cv.enum(FREQUENCY_OPTIONS),
             cv.Optional(CONF_PHASE_SHIFT, default=1.7): cv.float_,
         }
-    )
-    # .extend(
-    #     {
-    #         cv.Required(CONF_SENSOR): cv.use_id(voltage_sampler.VoltageSampler),
-    #         cv.Optional(
-    #             CONF_SAMPLE_DURATION, default="200ms"
-    #         ): cv.positive_time_period_milliseconds,
-    #     }
-    # )        
+        )
     .extend(cv.polling_component_schema('60s'))
 )
 
@@ -78,16 +70,17 @@ CONFIG_SCHEMA = (
 
 
 async def to_code(config):
-    var = cg.new_Pvariable(config[CONF_ID])
+    var = await sensor.new_sensor(config)
     await cg.register_component(var, config)
-    await sensor.register_sensor(var, config)
+    
+    sen = cg.new_Pvariable(config[CONF_ID])
+    cg.add(var.set_source(sen))
+    # await sensor.register_sensor(var, config)
     cg.add_library('EmonLib', None)
     pin = await cg.gpio_pin_expression(config[CONF_PIN])
+    cg.add(var.set_source(sen))
     cg.add(var.set_pin(pin))
     cg.add(var.set_conf_calibration(config[CONF_CALIBRATION]))
     cg.add(var.set_conf_number_of_samples(config[CONF_NUMBER_OF_SAMPLES]))
     cg.add(var.set_conf_frequency(config[CONF_FREQUENCY]))
-    cg.add(var.set_conf_phase_shift(config[CONF_PHASE_SHIFT]))
-    # sens = await cg.get_variable(config[CONF_SENSOR])
-    # cg.add(var.set_source(sens))
-    # cg.add(var.set_sample_duration(config[CONF_SAMPLE_DURATION]))    
+    cg.add(var.set_conf_phase_shift(config[CONF_PHASE_SHIFT]))   
